@@ -17,6 +17,11 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(assetsPath));
 
+// Route level middlewares
+app.get("/", (req, res) => {
+  res.send("Hello world!");
+});
+
 // App server
 app.listen(PORT, () => {
   console.log(`Server is currently listening on port ${PORT}.`);
