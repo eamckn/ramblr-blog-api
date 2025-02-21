@@ -1,3 +1,3 @@
-# express-skeleton
+# Ramblr
 
-Repository template for basic express applications. Extra functionality (authentication, etc) can be built on top of this.
+Personal blog project for The Odin Project
