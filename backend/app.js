@@ -1,10 +1,11 @@
 // App imports
-require("dotenv").config();
-const express = require("express");
-const path = require("node:path");
+import "dotenv/config";
+import express from "express";
+import path from "node:path";
 
 // App constants
 const PORT = process.env.PORT || 8080;
+const __dirname = path.resolve();
 const assetsPath = path.join(__dirname, "public");
 
 // App initializations
