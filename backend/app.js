@@ -1,7 +1,7 @@
 // App imports
+require("dotenv").config();
 const express = require("express");
 const path = require("node:path");
-require("dotenv").config();
 
 // App constants
 const PORT = process.env.PORT || 8080;
