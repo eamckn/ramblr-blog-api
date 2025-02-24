@@ -2,6 +2,7 @@
 import "dotenv/config";
 import express from "express";
 import path from "node:path";
+import postRouter from "./routes/postRouter.js";
 
 // App constants
 const PORT = process.env.PORT || 8080;
@@ -22,6 +23,7 @@ app.use(express.static(assetsPath));
 app.get("/", (req, res) => {
   res.send("Hello world!");
 });
+app.use("/posts", postRouter);
 
 // App server
 app.listen(PORT, () => {
