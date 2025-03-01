@@ -1,8 +1,10 @@
 // App imports
 import "dotenv/config";
+import "./config/passport.js";
 import express from "express";
 import path from "node:path";
 import postRouter from "./routes/postRouter.js";
+import indexRouter from "./routes/indexRouter.js";
 
 // App constants
 const PORT = process.env.PORT || 8080;
@@ -24,6 +26,7 @@ app.get("/", (req, res) => {
   res.send("Hello world!");
 });
 app.use("/posts", postRouter);
+app.use("/", indexRouter);
 
 // App server
 app.listen(PORT, () => {
