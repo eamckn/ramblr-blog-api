@@ -1,6 +1,7 @@
 import express from "express";
 import passport from "passport";
 import * as controller from "../controllers/indexController.js";
+import isAdmin from "../auth/admin.js";
 
 const router = express.Router();
 
@@ -15,6 +16,18 @@ router.get(
     //console.log(req.user);
     res.json({
       message: "You made it to the protected route",
+      user: req.user,
+    });
+  }
+);
+
+router.get(
+  "/admin",
+  passport.authenticate("jwt", { session: false, failureRedirect: "/failed" }),
+  isAdmin,
+  (req, res, next) => {
+    res.json({
+      message: "you made it! hello admin eamon",
       user: req.user,
     });
   }
