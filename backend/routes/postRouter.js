@@ -1,6 +1,8 @@
 import express from "express";
+import passport from "passport";
 import commmentsRouter from "./commentRouter.js";
 import * as controller from "../controllers/postController.js";
+import isAdmin from "../auth/admin.js";
 
 const router = express.Router();
 
@@ -11,12 +13,27 @@ router.get("/", controller.getAllPosts);
 router.get("/:postId", controller.getPostById);
 
 // POST
-router.post("/", controller.createPost);
+router.post(
+  "/",
+  passport.authenticate("jwt", { session: false, failureRedirect: "/failed" }),
+  isAdmin,
+  controller.createPost
+);
 
 // PUT
-router.put("/:postId", controller.editPost);
+router.put(
+  "/:postId",
+  passport.authenticate("jwt", { session: false, failureRedirect: "/failed" }),
+  isAdmin,
+  controller.editPost
+);
 
 // DELETE
-router.delete("/:postId", controller.deletePost);
+router.delete(
+  "/:postId",
+  passport.authenticate("jwt", { session: false, failureRedirect: "/failed" }),
+  isAdmin,
+  controller.deletePost
+);
 
 export default router;
