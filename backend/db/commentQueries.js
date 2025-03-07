@@ -6,6 +6,9 @@ export const getAllCommentsFromPostId = async (id) => {
     where: {
       postId: id,
     },
+    include: {
+      post: true,
+    },
   });
   return comments;
 };

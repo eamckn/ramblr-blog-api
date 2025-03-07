@@ -2,7 +2,11 @@ import prisma from "../config/prisma.js";
 
 // READ queries
 export const getAllPosts = async () => {
-  const posts = prisma.post.findMany();
+  const posts = prisma.post.findMany({
+    include: {
+      comments: true,
+    },
+  });
   return posts;
 };
 
@@ -10,6 +14,9 @@ export const getPostById = async (id) => {
   const post = prisma.post.findUnique({
     where: {
       id,
+    },
+    include: {
+      comments: true,
     },
   });
   return post;
@@ -37,6 +44,9 @@ export const editPost = async (id, title, content) => {
       title,
       content,
     },
+    include: {
+      comments: true,
+    },
   });
   return post;
 };
@@ -49,16 +59,25 @@ export const publishPost = async (id) => {
     data: {
       isPublished: true,
     },
+    include: {
+      comments: true,
+    },
   });
   return post;
 };
 
 // DELETE queries
 export const deletePost = async (id) => {
-  const post = await prisma.post.delete({
+  const comments = prisma.comment.deleteMany({
+    where: {
+      postId: id,
+    },
+  });
+  const post = prisma.post.delete({
     where: {
       id,
     },
   });
-  return post;
+  const transaction = await prisma.$transaction([comments, post]);
+  return transaction;
 };
