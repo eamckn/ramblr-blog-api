@@ -5,10 +5,15 @@ import isAdmin from "../auth/admin.js";
 
 const router = express.Router();
 
-router.post("/log-in", controller.logIn);
+// GET routes
+router.get("/log-in", controller.getLogInPage);
+router.get("/register", controller.getRegisterPage);
 
+// POST routes
+router.post("/log-in", controller.logIn);
 router.post("/register", controller.createUser);
 
+// Auth testing routes
 router.get(
   "/protected",
   passport.authenticate("jwt", { session: false, failureRedirect: "/failed" }),
@@ -40,3 +45,7 @@ router.get("/failed", (req, res, next) => {
 });
 
 export default router;
+
+// TODOS
+// - create all routes
+// - differentiate admin routes and user routes

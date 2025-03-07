@@ -15,11 +15,8 @@ router.post("/", controller.createPost);
 
 // PUT
 router.put("/:postId", controller.editPost);
-// router.put("/:postId/publish", controller.publishPost);
 
 // DELETE
 router.delete("/:postId", controller.deletePost);
-
-//
 
 export default router;

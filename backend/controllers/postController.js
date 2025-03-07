@@ -1,16 +1,5 @@
 import * as db from "../db/postQueries.js";
 
-export const getAllPosts = async (req, res, next) => {
-  const posts = await db.getAllPosts();
-  res.json(posts);
-};
-
-export const getPostById = async (req, res, next) => {
-  const { postId } = req.params;
-  const post = await db.getPostById(Number(postId));
-  res.json(post);
-};
-
 export const createPost = async (req, res, next) => {
   // Sample info from req.body
   const reqBody = {
@@ -23,6 +12,17 @@ export const createPost = async (req, res, next) => {
     reqBody.content,
     reqBody.userId
   );
+  res.json(post);
+};
+
+export const getAllPosts = async (req, res, next) => {
+  const posts = await db.getAllPosts();
+  res.json(posts);
+};
+
+export const getPostById = async (req, res, next) => {
+  const { postId } = req.params;
+  const post = await db.getPostById(Number(postId));
   res.json(post);
 };
 
@@ -46,12 +46,6 @@ export const editPost = async (req, res, next) => {
     res.json(post);
   }
 };
-
-// export const publishPost = async (req, res, next) => {
-//   const { postId } = req.params;
-//   const post = await db.publishPost(Number(postId));
-//   res.json(post);
-// };
 
 export const deletePost = async (req, res, next) => {
   const { postId } = req.params;
