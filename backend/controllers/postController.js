@@ -1,17 +1,9 @@
 import * as db from "../db/postQueries.js";
 
 export const createPost = async (req, res, next) => {
-  // Sample info from req.body
-  const reqBody = {
-    title: "New post title",
-    content: "Here is content for the blog post!",
-    userId: 1, // Our sample ADMIN userId
-  };
-  const post = await db.createPost(
-    reqBody.title,
-    reqBody.content,
-    reqBody.userId
-  );
+  const { title, content } = req.body;
+  const userId = 1; // Our ADMIN ID
+  const post = await db.createPost(title, content, userId);
   res.json(post);
 };
 
@@ -27,22 +19,14 @@ export const getPostById = async (req, res, next) => {
 };
 
 export const editPost = async (req, res, next) => {
-  // Sample info from req.body
-  const reqBody = {
-    title: "Updated post title",
-    content: "Here is updated content for the blog post!",
-  };
+  const { title, content } = req.body;
   const { postId } = req.params;
   const { publish } = req.query;
-  if (publish === "TRUE") {
+  if (publish === "t") {
     const post = await db.publishPost(Number(postId));
     res.json(post);
   } else {
-    const post = await db.editPost(
-      Number(postId),
-      reqBody.title,
-      reqBody.content
-    );
+    const post = await db.editPost(Number(postId), title, content);
     res.json(post);
   }
 };

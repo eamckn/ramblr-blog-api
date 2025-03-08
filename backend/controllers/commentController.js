@@ -1,12 +1,9 @@
 import * as db from "../db/commentQueries.js";
 
 export const createComment = async (req, res, next) => {
-  // Sample info from req.body
-  const reqBody = {
-    content: "Here is my first comment on a post!",
-  };
+  const { content } = req.body;
   const { postId } = req.params;
-  const comment = await db.createComment(Number(postId), reqBody.content);
+  const comment = await db.createComment(Number(postId), content);
   res.json(comment);
 };
 
