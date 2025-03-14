@@ -22,9 +22,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(assetsPath));
 
 // Route level middlewares
-app.get("/", (req, res) => {
-  res.send("Hello world!");
-});
 app.use("/posts", postRouter);
 app.use("/", indexRouter);
 
