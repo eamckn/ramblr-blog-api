@@ -2,6 +2,7 @@
 import "dotenv/config";
 import "./config/passport.js";
 import express from "express";
+import cors from "cors";
 import path from "node:path";
 import postRouter from "./routes/postRouter.js";
 import indexRouter from "./routes/indexRouter.js";
@@ -20,6 +21,7 @@ app.set("view engine", "ejs");
 // App level middlewares
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(assetsPath));
+app.use(cors());
 
 // Route level middlewares
 app.use("/posts", postRouter);
