@@ -16,18 +16,18 @@ export const logIn = async (req, res, next) => {
   if (!user) {
     // User does not exist
     // HANDLE NO USER
-    res.json({ message: "no user :(" });
+    res.status(401).json({ message: "User not found" });
   } else {
     const validPassword = password === user.password;
     if (!validPassword) {
       // Password is incorrect
       // HANDLE BAD PASSWORD
-      res.json({ message: "wrong password :(" });
+      res.status(401).json({ message: "Invalid password" });
     } else {
       const token = await issueToken(user);
       //console.log(token);
-      res.json({
-        message: "logged in successfully",
+      res.status(200).json({
+        message: "Successful login",
         token,
       });
     }
