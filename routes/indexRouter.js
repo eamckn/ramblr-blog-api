@@ -15,12 +15,11 @@ router.post("/register", controller.createUser);
 
 // Auth testing routes
 router.get(
-  "/protected",
-  passport.authenticate("jwt", { session: false, failureRedirect: "/failed" }),
+  "/verify",
+  passport.authenticate("jwt", { session: false }),
   (req, res, next) => {
-    //console.log(req.user);
     res.json({
-      message: "You made it to the protected route",
+      message: "Success",
       user: req.user,
     });
   }
