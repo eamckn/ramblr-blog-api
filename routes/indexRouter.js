@@ -43,6 +43,12 @@ router.get("/failed", (req, res, next) => {
   });
 });
 
+router.get("/log-out", (req, res, next) => {
+  res.json({
+    message: "Logout successful",
+  });
+});
+
 export default router;
 
 // TODOS
