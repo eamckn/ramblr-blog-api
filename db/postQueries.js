@@ -4,7 +4,15 @@ import prisma from "../config/prisma.js";
 export const getAllPosts = async () => {
   const posts = prisma.post.findMany({
     include: {
-      comments: true,
+      comments: {
+        include: {
+          user: {
+            select: {
+              username: true,
+            },
+          },
+        },
+      },
     },
   });
   return posts;
