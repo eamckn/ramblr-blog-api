@@ -14,11 +14,12 @@ export const getAllCommentsFromPostId = async (id) => {
 };
 
 // CREATE queries
-export const createComment = async (postId, content) => {
+export const createComment = async (postId, content, userId) => {
   const comment = await prisma.comment.create({
     data: {
-      content,
       postId,
+      content,
+      userId,
     },
   });
   return comment;
