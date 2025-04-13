@@ -1,4 +1,5 @@
 import * as db from "../db/userQueries.js";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 const issueToken = async (user) => {
@@ -21,8 +22,8 @@ export const logIn = async (req, res, next) => {
       message: "User not found",
     });
   } else {
-    const validPassword = password === user.password;
-    if (!validPassword) {
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) {
       // Password is incorrect
       // HANDLE BAD PASSWORD
       res.status(401).json({
@@ -43,12 +44,18 @@ export const logIn = async (req, res, next) => {
 
 export const createUser = async (req, res, next) => {
   const { email, username, password } = req.body;
-  const user = await db.createUser(email, username, password);
-  const token = await issueToken(user);
-  res.json({
-    message: "user created",
-    userCreated: user,
-    token,
+  bcrypt.hash(password, 10, async (err, hashedPassword) => {
+    if (err) {
+      return next(err);
+    } else {
+      const user = await db.createUser(email, username, hashedPassword);
+      const token = await issueToken(user);
+      res.json({
+        message: "user created",
+        userCreated: user,
+        token,
+      });
+    }
   });
 };
 
