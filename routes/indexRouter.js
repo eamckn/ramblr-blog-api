@@ -22,12 +22,12 @@ router.get(
 );
 
 router.get(
-  "/admin",
+  "/verifyAdmin",
   passport.authenticate("jwt", { session: false }),
   isAdmin,
   (req, res, next) => {
     res.json({
-      message: "you made it! hello admin eamon",
+      message: "Admin verified",
       user: req.user,
     });
   }
@@ -40,7 +40,3 @@ router.get("/log-out", (req, res, next) => {
 });
 
 export default router;
-
-// TODOS
-// - create all routes
-// - differentiate admin routes and user routes
