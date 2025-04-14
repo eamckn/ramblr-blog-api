@@ -2,8 +2,8 @@ import * as db from "../db/postQueries.js";
 
 export const createPost = async (req, res, next) => {
   const { title, content } = req.body;
-  const userId = 1; // Our ADMIN ID
-  const post = await db.createPost(title, content, userId);
+  const { id } = req.user;
+  const post = await db.createPost(title, content, id);
   res.json(post);
 };
 
