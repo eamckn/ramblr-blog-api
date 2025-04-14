@@ -2,7 +2,7 @@ import * as db from "../db/userQueries.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-const issueToken = async (user) => {
+const issueSignedJwt = async (user) => {
   const payload = {
     id: user.id,
   };
@@ -31,7 +31,7 @@ export const logIn = async (req, res, next) => {
         message: "Invalid password",
       });
     } else {
-      const token = await issueToken(user);
+      const token = await issueSignedJwt(user);
       //console.log(token);
       res.status(200).json({
         statusCode: 200,
@@ -49,9 +49,9 @@ export const createUser = async (req, res, next) => {
       return next(err);
     } else {
       const user = await db.createUser(email, username, hashedPassword);
-      const token = await issueToken(user);
+      const token = await issueSignedJwt(user);
       res.json({
-        message: "user created",
+        message: "Success: User created",
         userCreated: user,
         token,
       });
