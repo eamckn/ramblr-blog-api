@@ -23,7 +23,7 @@ router.get(
 
 router.get(
   "/admin",
-  passport.authenticate("jwt", { session: false, failureRedirect: "/failed" }),
+  passport.authenticate("jwt", { session: false }),
   isAdmin,
   (req, res, next) => {
     res.json({
@@ -32,12 +32,6 @@ router.get(
     });
   }
 );
-
-router.get("/failed", (req, res, next) => {
-  res.status(403).json({
-    message: "Unauthorized",
-  });
-});
 
 router.get("/log-out", (req, res, next) => {
   res.json({

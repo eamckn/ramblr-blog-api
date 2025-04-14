@@ -15,7 +15,7 @@ router.get("/:postId", controller.getPostById);
 // POST
 router.post(
   "/",
-  passport.authenticate("jwt", { session: false, failureRedirect: "/failed" }),
+  passport.authenticate("jwt", { session: false }),
   isAdmin,
   controller.createPost
 );
@@ -23,7 +23,7 @@ router.post(
 // PUT
 router.put(
   "/:postId",
-  passport.authenticate("jwt", { session: false, failureRedirect: "/failed" }),
+  passport.authenticate("jwt", { session: false }),
   isAdmin,
   controller.editPost
 );
@@ -31,7 +31,7 @@ router.put(
 // DELETE
 router.delete(
   "/:postId",
-  passport.authenticate("jwt", { session: false, failureRedirect: "/failed" }),
+  passport.authenticate("jwt", { session: false }),
   isAdmin,
   controller.deletePost
 );
