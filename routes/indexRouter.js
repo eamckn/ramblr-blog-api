@@ -5,10 +5,6 @@ import isAdmin from "../auth/admin.js";
 
 const router = express.Router();
 
-// GET routes
-router.get("/log-in", controller.getLogInPage);
-router.get("/register", controller.getRegisterPage);
-
 // POST routes
 router.post("/log-in", controller.logIn);
 router.post("/register", controller.createUser);

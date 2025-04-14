@@ -58,15 +58,3 @@ export const createUser = async (req, res, next) => {
     }
   });
 };
-
-export const getLogInPage = async (req, res, next) => {
-  res.json({
-    message: "You made it to the log-in page.",
-  });
-};
-
-export const getRegisterPage = async (req, res, next) => {
-  res.json({
-    message: "You made it to the register page.",
-  });
-};
