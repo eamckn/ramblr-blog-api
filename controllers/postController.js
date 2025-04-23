@@ -1,24 +1,25 @@
 import * as db from "../db/postQueries.js";
+import asyncHandler from "express-async-handler";
 
-export const createPost = async (req, res, next) => {
+export const createPost = asyncHandler(async (req, res, next) => {
   const { title, content } = req.body;
   const { id } = req.user;
   const post = await db.createPost(title, content, id);
   res.json(post);
-};
+});
 
-export const getAllPosts = async (req, res, next) => {
+export const getAllPosts = asyncHandler(async (req, res, next) => {
   const posts = await db.getAllPosts();
   res.json(posts);
-};
+});
 
-export const getPostById = async (req, res, next) => {
+export const getPostById = asyncHandler(async (req, res, next) => {
   const { postId } = req.params;
   const post = await db.getPostById(Number(postId));
   res.json(post);
-};
+});
 
-export const editPost = async (req, res, next) => {
+export const editPost = asyncHandler(async (req, res, next) => {
   const { title, content } = req.body;
   const { postId } = req.params;
   const { publish } = req.query;
@@ -29,10 +30,10 @@ export const editPost = async (req, res, next) => {
     const post = await db.editPost(Number(postId), title, content);
     res.json(post);
   }
-};
+});
 
-export const deletePost = async (req, res, next) => {
+export const deletePost = asyncHandler(async (req, res, next) => {
   const { postId } = req.params;
   const post = await db.deletePost(Number(postId));
   res.json(post);
-};
+});

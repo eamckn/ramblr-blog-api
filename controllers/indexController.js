@@ -1,6 +1,7 @@
-import * as db from "../db/userQueries.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import asyncHandler from "express-async-handler";
+import * as db from "../db/userQueries.js";
 
 const issueSignedJwt = async (user) => {
   const payload = {
@@ -11,7 +12,7 @@ const issueSignedJwt = async (user) => {
   return token;
 };
 
-export const logIn = async (req, res, next) => {
+export const logIn = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
   const user = await db.getUserByEmail(email);
   if (!user) {
@@ -40,9 +41,9 @@ export const logIn = async (req, res, next) => {
       });
     }
   }
-};
+});
 
-export const createUser = async (req, res, next) => {
+export const createUser = asyncHandler(async (req, res, next) => {
   const { email, username, password } = req.body;
   bcrypt.hash(password, 10, async (err, hashedPassword) => {
     if (err) {
@@ -57,4 +58,4 @@ export const createUser = async (req, res, next) => {
       });
     }
   });
-};
+});

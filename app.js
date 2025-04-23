@@ -20,6 +20,11 @@ app.use(cors());
 app.use("/posts", postRouter);
 app.use("/", indexRouter);
 
+// Error middleware
+app.use((err, req, res, next) => {
+  res.status(500).send(err);
+});
+
 // App server
 app.listen(PORT, () => {
   console.log(`Server is currently listening on port ${PORT}.`);
