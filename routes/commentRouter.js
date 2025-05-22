@@ -9,7 +9,11 @@ const router = express.Router({ mergeParams: true });
 router.get("/", controller.getAllCommentsForPost);
 
 // POST
-router.post("/", controller.createComment);
+router.post(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  controller.createComment
+);
 
 // DELETE
 router.delete(
