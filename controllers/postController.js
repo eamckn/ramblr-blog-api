@@ -13,6 +13,16 @@ export const getAllPosts = asyncHandler(async (req, res, next) => {
   res.json(posts);
 });
 
+export const getAllDrafts = asyncHandler(async (req, res, next) => {
+  const drafts = await db.getAllDrafts();
+  res.json(drafts);
+});
+
+export const getAllPublished = asyncHandler(async (req, res, next) => {
+  const publishedPosts = await db.getAllPublished();
+  res.json(publishedPosts);
+});
+
 export const getPostById = asyncHandler(async (req, res, next) => {
   const { postId } = req.params;
   const post = await db.getPostById(Number(postId));

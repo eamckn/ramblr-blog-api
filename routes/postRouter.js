@@ -10,6 +10,8 @@ router.use("/:postId/comments", commmentsRouter);
 
 // GET
 router.get("/", controller.getAllPosts);
+router.get("/drafts", controller.getAllDrafts);
+router.get("/published", controller.getAllPublished);
 router.get("/:postId", controller.getPostById);
 
 // POST

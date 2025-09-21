@@ -18,6 +18,46 @@ export const getAllPosts = async () => {
   return posts;
 };
 
+export const getAllDrafts = async () => {
+  const posts = prisma.post.findMany({
+    include: {
+      comments: {
+        include: {
+          user: {
+            select: {
+              username: true,
+            },
+          },
+        },
+      },
+    },
+    where: {
+      isPublished: false,
+    },
+  });
+  return posts;
+};
+
+export const getAllPublished = async () => {
+  const posts = prisma.post.findMany({
+    include: {
+      comments: {
+        include: {
+          user: {
+            select: {
+              username: true,
+            },
+          },
+        },
+      },
+    },
+    where: {
+      isPublished: true,
+    },
+  });
+  return posts;
+};
+
 export const getPostById = async (id) => {
   const post = prisma.post.findUnique({
     where: {
