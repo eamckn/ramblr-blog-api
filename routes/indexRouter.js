@@ -8,6 +8,7 @@ const router = express.Router();
 // POST routes
 router.post("/log-in", controller.logIn);
 router.post("/register", controller.createUser);
+router.post("/admin", controller.logInAdmin);
 
 // Auth testing routes
 router.get(
@@ -22,7 +23,7 @@ router.get(
 );
 
 router.get(
-  "/verifyAdmin",
+  "/admin",
   passport.authenticate("jwt", { session: false }),
   isAdmin,
   (req, res, next) => {

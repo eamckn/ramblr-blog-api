@@ -43,6 +43,29 @@ export const logIn = asyncHandler(async (req, res, next) => {
   }
 });
 
+export const logInAdmin = asyncHandler(async (req, res, next) => {
+  const { email, password } = req.body;
+  const user = await db.getUserByEmail(email);
+  if (!user || user.role !== "ADMIN") {
+    res.status(403).json({
+      message: "User not found or not authorized as an admin.",
+    });
+  } else {
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) {
+      res.status(401).json({
+        message: "Invalid admin password",
+      });
+    } else {
+      const token = await issueSignedJwt(user);
+      res.status(200).json({
+        message: "Admin verified",
+        token,
+      });
+    }
+  }
+});
+
 export const createUser = asyncHandler(async (req, res, next) => {
   const { email, username, password } = req.body;
   bcrypt.hash(password, 10, async (err, hashedPassword) => {
