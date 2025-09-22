@@ -32,9 +32,12 @@ export const getPostById = asyncHandler(async (req, res, next) => {
 export const editPost = asyncHandler(async (req, res, next) => {
   const { title, content } = req.body;
   const { postId } = req.params;
-  const { publish } = req.query;
+  const { publish, unpublish } = req.query;
   if (publish === "t") {
     const post = await db.publishPost(Number(postId));
+    res.json(post);
+  } else if (unpublish === "t") {
+    const post = await db.unpublishPost(Number(postId));
     res.json(post);
   } else {
     const post = await db.editPost(Number(postId), title, content);

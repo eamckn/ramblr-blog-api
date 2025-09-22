@@ -114,6 +114,21 @@ export const publishPost = async (id) => {
   return post;
 };
 
+export const unpublishPost = async (id) => {
+  const post = await prisma.post.update({
+    where: {
+      id,
+    },
+    data: {
+      isPublished: false,
+    },
+    include: {
+      comments: true,
+    },
+  });
+  return post;
+};
+
 // DELETE queries
 export const deletePost = async (id) => {
   const comments = prisma.comment.deleteMany({
