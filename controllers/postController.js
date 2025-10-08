@@ -1,5 +1,6 @@
 import * as db from "../db/postQueries.js";
 import asyncHandler from "express-async-handler";
+import sanitize from "sanitize-html";
 
 export const createPost = asyncHandler(async (req, res, next) => {
   const { title, content } = req.body;
@@ -40,7 +41,11 @@ export const editPost = asyncHandler(async (req, res, next) => {
     const post = await db.unpublishPost(Number(postId));
     res.json(post);
   } else {
-    const post = await db.editPost(Number(postId), title, content);
+    const sanitizedContent = sanitize(content, {
+      allowedTags: ["b", "i", "u", "strong", "em"],
+      allowedAttributes: [],
+    });
+    const post = await db.editPost(Number(postId), title, sanitizedContent);
     res.json(post);
   }
 });
