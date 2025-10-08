@@ -18,7 +18,7 @@ model Post {
   title       String
   content     String
   postedAt    DateTime  @default(now())
-  isPublished Boolean   @default(false)
+  isPublished Boolean   @default(true)
   comments    Comment[]
   User        User      @relation(fields: [userId], references: [id])
   userId      Int
