@@ -82,6 +82,18 @@ export const createPost = async (title, content, userId) => {
   return post;
 };
 
+export const createDraft = async (title, content, userId) => {
+  const post = await prisma.post.create({
+    data: {
+      title,
+      content,
+      userId,
+      isPublished: false,
+    },
+  });
+  return post;
+};
+
 // UPDATE queries
 export const editPost = async (id, title, content) => {
   const post = await prisma.post.update({

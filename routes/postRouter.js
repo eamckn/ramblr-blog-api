@@ -22,6 +22,13 @@ router.post(
   controller.createPost
 );
 
+router.post(
+  "/drafts",
+  passport.authenticate("jwt", { session: false }),
+  isAdmin,
+  controller.createDraft
+);
+
 // PUT
 router.put(
   "/:postId",
