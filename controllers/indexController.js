@@ -1,23 +1,13 @@
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
 import asyncHandler from "express-async-handler";
+import issueToken from "../auth/issueToken.js";
 import * as db from "../db/userQueries.js";
-
-const issueSignedJwt = async (user) => {
-  const payload = {
-    id: user.id,
-  };
-
-  const token = jwt.sign(payload, process.env.SECRET, { expiresIn: "7d" });
-  return token;
-};
 
 export const logIn = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
   const user = await db.getUserByEmail(email);
   if (!user) {
     // User does not exist
-    // HANDLE NO USER
     res.status(401).json({
       statusCode: 401,
       message: "User not found",
@@ -26,13 +16,12 @@ export const logIn = asyncHandler(async (req, res, next) => {
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
       // Password is incorrect
-      // HANDLE BAD PASSWORD
       res.status(401).json({
         statusCode: 401,
         message: "Invalid password",
       });
     } else {
-      const token = await issueSignedJwt(user);
+      const token = await issueToken(user);
       //console.log(token);
       res.status(200).json({
         statusCode: 200,
@@ -57,7 +46,7 @@ export const logInAdmin = asyncHandler(async (req, res, next) => {
         message: "Invalid admin password",
       });
     } else {
-      const token = await issueSignedJwt(user);
+      const token = await issueToken(user);
       res.status(200).json({
         message: "Admin verified",
         token,
@@ -73,7 +62,7 @@ export const createUser = asyncHandler(async (req, res, next) => {
       return next(err);
     } else {
       const user = await db.createUser(email, username, hashedPassword);
-      const token = await issueSignedJwt(user);
+      const token = await issueToken(user);
       res.json({
         message: "Success: User created",
         userCreated: user,
