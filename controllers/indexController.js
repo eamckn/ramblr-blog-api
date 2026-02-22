@@ -66,7 +66,6 @@ export const createUser = asyncHandler(async (req, res, next) => {
       const token = await issueToken(user);
       res.json({
         message: "Success: User created",
-        userCreated: user,
         token,
       });
     }
