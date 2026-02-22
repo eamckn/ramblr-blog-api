@@ -7,7 +7,7 @@ const ExtractJwt = passportJWT.ExtractJwt;
 
 const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: "secret",
+  secretOrKey: process.env.SECRET,
 };
 
 const verifyCallback = async (payload, done) => {
