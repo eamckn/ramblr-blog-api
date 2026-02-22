@@ -9,7 +9,6 @@ export const logIn = asyncHandler(async (req, res, next) => {
   if (!user) {
     // User does not exist
     res.status(401).json({
-      statusCode: 401,
       message: "User not found",
     });
   } else {
@@ -17,14 +16,12 @@ export const logIn = asyncHandler(async (req, res, next) => {
     if (!match) {
       // Password is incorrect
       res.status(401).json({
-        statusCode: 401,
         message: "Invalid password",
       });
     } else {
       const token = await issueToken(user);
       //console.log(token);
       res.status(200).json({
-        statusCode: 200,
         message: "Successful login",
         token,
       });
@@ -35,9 +32,13 @@ export const logIn = asyncHandler(async (req, res, next) => {
 export const logInAdmin = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
   const user = await db.getUserByEmail(email);
-  if (!user || user.role !== "ADMIN") {
+  if (!user) {
+    res.status(401).json({
+      message: "User not found.",
+    });
+  } else if (user.role !== "ADMIN") {
     res.status(403).json({
-      message: "User not found or not authorized as an admin.",
+      message: "User not authorized as an admin.",
     });
   } else {
     const match = await bcrypt.compare(password, user.password);
