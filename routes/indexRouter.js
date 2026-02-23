@@ -10,9 +10,13 @@ router.post("/log-in", controller.logIn);
 router.post("/register", controller.createUser);
 router.post("/admin", controller.logInAdmin);
 // Logout route
-router.post("/log-out", (req, res, next) => {
-  res.sendStatus(200);
-});
+router.post(
+  "/log-out",
+  passport.authenticate("jwt", { session: false }),
+  (req, res, next) => {
+    res.sendStatus(200);
+  }
+);
 
 // Auth testing routes
 router.get(
