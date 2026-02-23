@@ -20,7 +20,6 @@ export const logIn = asyncHandler(async (req, res, next) => {
       });
     } else {
       const token = await issueToken(user);
-      //console.log(token);
       res.status(200).json({
         message: "Successful login",
         token,

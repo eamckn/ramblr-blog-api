@@ -12,7 +12,6 @@ const options = {
 
 const verifyCallback = async (payload, done) => {
   try {
-    console.log(payload);
     const user = await db.getUserById(payload.id);
     if (!user) {
       console.log("user not found");
