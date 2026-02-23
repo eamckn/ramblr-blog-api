@@ -5,7 +5,8 @@ const issueJwt = async (user) => {
     id: user.id,
   };
 
-  const token = jwt.sign(payload, process.env.SECRET, { expiresIn: "7d" });
+  const token =
+    "Bearer " + jwt.sign(payload, process.env.SECRET, { expiresIn: "7d" });
   return token;
 };
 
