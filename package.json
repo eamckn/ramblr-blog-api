@@ -1,8 +1,7 @@
 {
   "type": "module",
   "scripts": {
-    "build": "prisma migrate deploy",
-    "start": "node app.js"
+    "start": "prisma migrate deploy && node app.js"
   },
   "dependencies": {
     "@prisma/client": "^6.3.0",
