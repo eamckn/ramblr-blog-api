@@ -1,7 +1,7 @@
 {
   "type": "module",
   "scripts": {
-    "build": "prisma generate",
+    "build": "prisma migrate deploy",
     "start": "node app.js"
   },
   "dependencies": {
